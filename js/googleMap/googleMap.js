@@ -11,6 +11,10 @@ function initialize() {
 	zoom: 11
   });
   
+  //Add transit layer
+  var transitLayer = new google.maps.TransitLayer();
+  transitLayer.setMap(map);
+  
   // Create the legend and display on the map
   var legendDiv = document.createElement('DIV');
   var legend = new Legend(legendDiv, map);
@@ -44,23 +48,24 @@ function initialize() {
     markers = [];
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0, place; place = places[i]; i++) {
-      var image = {
+      /*var image = {
         url: "images/Home.png",
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(0, 0),
         scaledSize: new google.maps.Size(25, 25)
-      };
+      };*/
 
       // Create a marker for each place.
       var marker = new google.maps.Marker({
         map: map,
-        icon: image,
+        //icon: image,
         title: place.name,
         position: place.geometry.location
       });
 
      // markers.push(marker);
+  
 		drawArea(map, place.geometry.location);
       bounds.extend(place.geometry.location);
     }
@@ -104,8 +109,8 @@ function Legend(controlDiv, map) {
   
   // Add the text
   controlText.innerHTML = '<b>Distance</b><br />' +
-  	'<img src="images/HomeOrange.png" />1KM Radius<br />' +
-  	'<img src="images/HomeYellow.png" /> 2KM Radius<br />';
+  	'1KM Radius (Inner Circle)<br />' +
+  	'2KM Radius (Outer Circle)<br />';
   controlUI.appendChild(controlText);
 }
 
@@ -118,14 +123,14 @@ function drawArea(map, latlon){
 	  distance: 1,
 	  scEligibleVacancy: 38,
 	  sprEligibleVacancy: 3,
-	  fillColor: '#FF0000'
+	  fillColor: '#1aa3ff'
 	};
 	citymap['School'] = {
 	  center: latlon,
 	  distance: 2,
 	  scEligibleVacancy: 10,
 	  sprEligibleVacancy: 1,
-	  fillColor: '#FFF000'
+	  fillColor: '#66c2ff'
 	};
 	
 	/*
